@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BudgetMasters - Charts</title>
+    <link rel="stylesheet" href="/css/style.css">
+    <!-- Add Chart.js library first -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+    <nav class="sidebar">
+        <h1>BudgetMasters</h1>
+        <ul>
+            <li><a href="/dashboard.html">Dashboard</a></li>
+            <li><a href="/expenses.html">Expenses</a></li>
+            <li><a href="/charts.html" class="active">Charts</a></li>
+            <li><a href="/leaderboard.html">Leaderboard</a></li>
+            <li><a href="/help.html">Help</a></li>
+        </ul>
+
+        <div class="user-info">
+            <span id="username"></span>
+            <button id="logoutBtn" class="btn-secondary">Logout</button>
+        </div>
+    </nav>
+
+    <main class="main-content charts-page">
+        <h1>Spending Analytics</h1>
+
+        <div class="filters mb-1">
+            <div class="form-group">
+                <label for="budgetSelect">Budget</label>
+                <select id="budgetSelect">
+                    <option value="all">All Budgets</option>
+                </select>
+            </div>
+        </div>
+
+        <div id="charts-grid" class="charts-grid">
+            <div class="chart-container">
+                <h2>Spending by Category</h2>
+                <canvas id="categoryPieChart"></canvas>
+            </div>
+
+            <div class="chart-container">
+                <h2>Monthly Spending Trends</h2>
+                <canvas id="trendsBarChart"></canvas>
+            </div>
+
+            <div class="chart-container">
+                <h2>Budget vs. Actual Spending</h2>
+                <canvas id="budgetComparisonChart"></canvas>
+            </div>
+
+            <div class="chart-container">
+                <h2>Daily Spending Pattern</h2>
+                <canvas id="dailyLineChart"></canvas>
+            </div>
+        </div>
+    </main>
+
+    <!-- Add your charts.js after everything else -->
+    <script src="/js/charts.js"></script>
+</body>
+</html>
