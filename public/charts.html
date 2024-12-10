@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BudgetMasters - Charts</title>
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+    <nav class="sidebar">
+        <h1>BudgetMasters</h1>
+        <ul>
+            <li><a href="/dashboard.html">Dashboard</a></li>
+            <li><a href="/expenses.html">Expenses</a></li>
+            <li><a href="/charts.html" class="active">Charts</a></li>
+            <li><a href="/leaderboard.html">Leaderboard</a></li>
+            <li><a href="/help.html">Help</a></li>
+        </ul>
+        <div class="user-info">
+            <span id="username"></span>
+            <button id="logoutBtn" class="btn-secondary">Logout</button>
+        </div>
+    </nav>
+
+    <div class="main-content">
+        <h1>Spending Analytics</h1>
+
+        <div class="filters mb-1">
+            <div class="form-group">
+                <label for="budgetSelect">Budget</label>
+                <select id="budgetSelect" class="form-control">
+                    <option value="all">All Budgets</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="timeRange">Time Range</label>
+                <select id="timeRange" class="form-control">
+                    <option value="month">Last Month</option>
+                    <option value="year">Last Year</option>
+                    <option value="all" selected>All Time</option>
+                </select>
+            </div>
+        </div>
+
+        <div class="charts-grid">
+            <div class="chart-container">
+                <h2>Spending by Category</h2>
+                <canvas id="categoryChart"></canvas>
+            </div>
+
+            <div class="chart-container">
+                <h2>Monthly Spending Trends</h2>
+                <canvas id="trendChart"></canvas>
+            </div>
+
+            <div class="chart-container">
+                <h2>Budget vs. Actual Spending</h2>
+                <canvas id="comparisonChart"></canvas>
+            </div>
+
+            <div class="chart-container">
+                <h2>Daily Spending Pattern</h2>
+                <canvas id="dailyChart"></canvas>
+            </div>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="/js/charts.js"></script>
+</body>
+</html>
