@@ -14,7 +14,7 @@ const app = express();
 // Middleware
 app.use(cors());
 app.use(bodyParser.json());
-app.use(express.static('public'));
+app.use(express.static(path.join(__dirname, '../public')));
 
 // Modified database connection with async initialization
 async function startServer() {
@@ -76,6 +76,22 @@ async function startServer() {
                 });
             }
         });
+
+        // Catch-all route handler for client-side routing
+        app.get('*', (req, res) => {
+            res.sendFile(path.join(__dirname, '../public/index.html'));
+        });
+
+        // Error handling middleware
+        app.use((err, req, res, next) => {
+            console.error('Server Error:', err);
+            res.status(500).json({
+                success: false,
+                message: 'Internal server error',
+                error: process.env.NODE_ENV === 'development' ? err.message : undefined
+            });
+        });
+
         // Start server after successful database connection
         const PORT = process.env.PORT || 3000;
         app.listen(PORT, () => {
@@ -88,6 +104,17 @@ async function startServer() {
         process.exit(1);
     }
 }
+
+// Handle uncaught exceptions and rejections
+process.on('uncaughtException', (error) => {
+    console.error('Uncaught Exception:', error);
+    process.exit(1);
+});
+
+process.on('unhandledRejection', (error) => {
+    console.error('Unhandled Rejection:', error);
+    process.exit(1);
+});
 
 // Start the server
 startServer();
