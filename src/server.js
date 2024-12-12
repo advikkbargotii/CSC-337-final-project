@@ -82,18 +82,8 @@ async function startServer() {
             res.sendFile(path.join(__dirname, '../public/index.html'));
         });
 
-        // Error handling middleware
-        app.use((err, req, res, next) => {
-            console.error('Server Error:', err);
-            res.status(500).json({
-                success: false,
-                message: 'Internal server error',
-                error: process.env.NODE_ENV === 'development' ? err.message : undefined
-            });
-        });
-
         // Start server after successful database connection
-        const PORT = process.env.PORT || 3000;
+        const PORT = 80;  // Changed from process.env.PORT || 3000 to 80
         app.listen(PORT, () => {
             console.log(`🚀 Server is running on port ${PORT}`);
             console.log('💾 MongoDB Status:', mongoose.connection.readyState === 1 ? 'Connected' : 'Not connected');
@@ -105,7 +95,7 @@ async function startServer() {
     }
 }
 
-// Handle uncaught exceptions and rejections
+// Handle uncaught exceptions
 process.on('uncaughtException', (error) => {
     console.error('Uncaught Exception:', error);
     process.exit(1);
