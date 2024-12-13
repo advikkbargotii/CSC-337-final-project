@@ -14,7 +14,7 @@ const app = express();
 // Middleware
 app.use(cors());
 app.use(bodyParser.json());
-app.use(express.static('public'));
+app.use(express.static(path.join(__dirname, '../public')));
 
 // Modified database connection with async initialization
 async function startServer() {
@@ -76,8 +76,14 @@ async function startServer() {
                 });
             }
         });
+
+        // Catch-all route handler for client-side routing
+        app.get('*', (req, res) => {
+            res.sendFile(path.join(__dirname, '../public/index.html'));
+        });
+
         // Start server after successful database connection
-        const PORT = process.env.PORT || 3000;
+        const PORT = 3000;  // Changed port to 3000
         app.listen(PORT, () => {
             console.log(`🚀 Server is running on port ${PORT}`);
             console.log('💾 MongoDB Status:', mongoose.connection.readyState === 1 ? 'Connected' : 'Not connected');
@@ -88,6 +94,17 @@ async function startServer() {
         process.exit(1);
     }
 }
+
+// Handle uncaught exceptions
+process.on('uncaughtException', (error) => {
+    console.error('Uncaught Exception:', error);
+    process.exit(1);
+});
+
+process.on('unhandledRejection', (error) => {
+    console.error('Unhandled Rejection:', error);
+    process.exit(1);
+});
 
 // Start the server
 startServer();
