@@ -1,4 +1,7 @@
 // src/config/db.js
+// Contributors: Harshit Jain, Ashish Dev Choudhary, Shivansh Singh, Advik Bargoti
+// Sets up MongoDB
+
 const mongoose = require('mongoose');
 require('dotenv').config();
 
