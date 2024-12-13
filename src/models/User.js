@@ -1,3 +1,6 @@
+// src/models/User.js
+// Contributors: Harshit Jain, Ashish Dev Choudhary, Shivansh Singh, Advik Bargoti
+// Model set up for User data with Mongoose
 const mongoose = require('mongoose');
 
 const userSchema = new mongoose.Schema({
