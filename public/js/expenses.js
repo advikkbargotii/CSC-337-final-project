@@ -1,3 +1,6 @@
+// public/js/expenses.js
+// Contributors: Harshit Jain, Ashish Dev Choudhary, Shivansh Singh, Advik Bargoti
+// Javascript file for Expenses Functionality
 let allExpenses = [];
 let userBudgets = [];
 
