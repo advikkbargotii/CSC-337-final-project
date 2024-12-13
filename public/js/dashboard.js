@@ -1,3 +1,6 @@
+// public/js/dashboard.js
+// Contributors: Harshit Jain, Ashish Dev Choudhary, Shivansh Singh, Advik Bargoti
+// Javascript file for Dashboard Functionality
 let currentBudgets = [];
 
 document.addEventListener('DOMContentLoaded', () => {
