@@ -11,43 +11,15 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Event listeners
     document.getElementById('logoutBtn').addEventListener('click', logout);
-    document.getElementById('budgetSelect').addEventListener('change', loadAndDisplayData);
     document.getElementById('timeRange').addEventListener('change', loadAndDisplayData);
 
-    // Initial setup
-    loadBudgets();
+    // Initial data load
+    loadAndDisplayData();
 });
-
-async function loadBudgets() {
-    try {
-        const user = JSON.parse(localStorage.getItem('user'));
-        const response = await fetch(`/api/budgets/${user.id}`);
-        const data = await response.json();
-
-        if (data.success) {
-            const budgetSelect = document.getElementById('budgetSelect');
-            // Clear existing options except "All Budgets"
-            budgetSelect.innerHTML = '<option value="all">All Budgets</option>';
-            
-            data.budgets.forEach(budget => {
-                const option = document.createElement('option');
-                option.value = budget._id;
-                option.textContent = budget.name;
-                budgetSelect.appendChild(option);
-            });
-
-            // Load initial data after budgets are loaded
-            loadAndDisplayData();
-        }
-    } catch (error) {
-        console.error('Error loading budgets:', error);
-    }
-}
 
 async function loadAndDisplayData() {
     try {
         const user = JSON.parse(localStorage.getItem('user'));
-        const selectedBudget = document.getElementById('budgetSelect').value;
         const timeRange = document.getElementById('timeRange').value;
 
         // First get all budgets for the user
@@ -58,27 +30,15 @@ async function loadAndDisplayData() {
             throw new Error('Failed to load budgets');
         }
 
-        let allExpenses = [];
+        // Get expenses for all budgets
+        const expensesPromises = budgetsData.budgets.map(budget =>
+            fetch(`/api/expenses/budget/${budget._id}`).then(res => res.json())
+        );
         
-        // If "all" is selected, get expenses for all budgets
-        if (selectedBudget === 'all') {
-            const expensesPromises = budgetsData.budgets.map(budget =>
-                fetch(`/api/expenses/budget/${budget._id}`).then(res => res.json())
-            );
-            
-            const expensesResults = await Promise.all(expensesPromises);
-            allExpenses = expensesResults
-                .filter(result => result.success)
-                .flatMap(result => result.expenses);
-        } else {
-            // Get expenses for selected budget only
-            const expensesResponse = await fetch(`/api/expenses/budget/${selectedBudget}`);
-            const expensesData = await expensesResponse.json();
-            
-            if (expensesData.success) {
-                allExpenses = expensesData.expenses;
-            }
-        }
+        const expensesResults = await Promise.all(expensesPromises);
+        const allExpenses = expensesResults
+            .filter(result => result.success)
+            .flatMap(result => result.expenses);
 
         // Filter expenses by time range
         const filteredExpenses = filterExpensesByTimeRange(allExpenses, timeRange);
@@ -138,7 +98,6 @@ function processAndDisplayData(expenses) {
     drawBarChart(trendChartData);
 }
 
-// Your existing drawPieChart and drawBarChart functions remain the same
 function drawPieChart(data) {
     // Clear previous chart
     d3.select('#categoryChart').selectAll('*').remove();
