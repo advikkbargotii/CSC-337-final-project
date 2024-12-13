@@ -1,5 +1,4 @@
 let allExpenses = [];
-let userBudgets = [];
 
 document.addEventListener('DOMContentLoaded', () => {
     // Check if user is logged in
@@ -14,28 +13,23 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Event listeners
     document.getElementById('logoutBtn').addEventListener('click', logout);
-    document.getElementById('budgetFilter').addEventListener('change', filterExpenses);
     document.getElementById('categoryFilter').addEventListener('change', filterExpenses);
     document.getElementById('dateFilter').addEventListener('change', filterExpenses);
     document.getElementById('editExpenseForm').addEventListener('submit', updateExpense);
 
     // Load initial data
-    loadBudgetsAndExpenses();
+    loadExpenses();
 });
 
-async function loadBudgetsAndExpenses() {
+async function loadExpenses() {
     try {
         const user = JSON.parse(localStorage.getItem('user'));
         
-        // Load budgets
+        // Load budgets to get all expenses
         const budgetsResponse = await fetch(`/api/budgets/${user.id}`);
         const budgetsData = await budgetsResponse.json();
         
         if (budgetsData.success) {
-            userBudgets = budgetsData.budgets;
-            populateBudgetFilter(budgetsData.budgets);
-            populateCategoryFilter(budgetsData.budgets);
-            
             // Load expenses for each budget
             const allExpensesPromises = budgetsData.budgets.map(budget => 
                 fetch(`/api/expenses/budget/${budget._id}`).then(res => res.json())
@@ -46,6 +40,10 @@ async function loadBudgetsAndExpenses() {
                 .filter(result => result.success)
                 .flatMap(result => result.expenses);
             
+            // Populate category filter with unique categories
+            populateCategoryFilter(allExpenses);
+            
+            // Display all expenses
             displayExpenses(allExpenses);
         }
     } catch (error) {
@@ -53,20 +51,11 @@ async function loadBudgetsAndExpenses() {
     }
 }
 
-function populateBudgetFilter(budgets) {
-    const budgetFilter = document.getElementById('budgetFilter');
-    budgets.forEach(budget => {
-        const option = document.createElement('option');
-        option.value = budget._id;
-        option.textContent = budget.name;
-        budgetFilter.appendChild(option);
-    });
-}
-
-function populateCategoryFilter(budgets) {
+function populateCategoryFilter(expenses) {
     const categoryFilter = document.getElementById('categoryFilter');
-    const categories = new Set(budgets.flatMap(budget => budget.categories));
+    const categories = new Set(expenses.map(expense => expense.category));
     
+    categoryFilter.innerHTML = '<option value="all">All Categories</option>';
     categories.forEach(category => {
         const option = document.createElement('option');
         option.value = category;
@@ -76,15 +65,10 @@ function populateCategoryFilter(budgets) {
 }
 
 function filterExpenses() {
-    const budgetId = document.getElementById('budgetFilter').value;
     const category = document.getElementById('categoryFilter').value;
     const dateFilter = document.getElementById('dateFilter').value;
     
     let filteredExpenses = [...allExpenses];
-    
-    if (budgetId !== 'all') {
-        filteredExpenses = filteredExpenses.filter(expense => expense.budgetId === budgetId);
-    }
     
     if (category !== 'all') {
         filteredExpenses = filteredExpenses.filter(expense => expense.category === category);
@@ -115,14 +99,12 @@ function displayExpenses(expenses) {
     tbody.innerHTML = '';
     
     expenses.sort((a, b) => new Date(b.date) - new Date(a.date)).forEach(expense => {
-        const budget = userBudgets.find(b => b._id === expense.budgetId);
         const tr = document.createElement('tr');
         
         tr.innerHTML = `
             <td>${formatDate(expense.date)}</td>
             <td>${expense.description}</td>
             <td>${expense.category}</td>
-            <td>${budget ? budget.name : 'Unknown Budget'}</td>
             <td>${formatCurrency(expense.amount)}</td>
             <td>
                 <button class="btn-secondary btn-small" onclick="editExpense('${expense._id}')">Edit</button>
@@ -168,7 +150,7 @@ async function updateExpense(e) {
         const data = await response.json();
         if (data.success) {
             closeEditModal();
-            loadBudgetsAndExpenses();
+            loadExpenses();
         }
     } catch (error) {
         console.error('Error updating expense:', error);
@@ -185,7 +167,7 @@ async function deleteExpense(expenseId) {
         
         const data = await response.json();
         if (data.success) {
-            loadBudgetsAndExpenses();
+            loadExpenses();
         }
     } catch (error) {
         console.error('Error deleting expense:', error);
