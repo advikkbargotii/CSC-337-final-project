@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>BudgetMasters - Charts</title>
     <link rel="stylesheet" href="/css/style.css">
+    <script src="https://d3js.org/d3.v7.min.js"></script>
 </head>
 <body>
     <nav class="sidebar">
@@ -46,28 +47,17 @@
         <div class="charts-grid">
             <div class="chart-container">
                 <h2>Spending by Category</h2>
-                <canvas id="categoryChart"></canvas>
+                <div id="categoryChart"></div>
             </div>
 
             <div class="chart-container">
-                <h2>Monthly Spending Trends</h2>
-                <canvas id="trendChart"></canvas>
-            </div>
-
-            <div class="chart-container">
-                <h2>Budget vs. Actual Spending</h2>
-                <canvas id="comparisonChart"></canvas>
-            </div>
-
-            <div class="chart-container">
-                <h2>Daily Spending Pattern</h2>
-                <canvas id="dailyChart"></canvas>
+                <h2>Spending Trends Over Time</h2>
+                <div id="trendChart"></div>
             </div>
         </div>
     </div>
 
     <!-- Scripts -->
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script src="/js/charts.js"></script>
 </body>
 </html>
