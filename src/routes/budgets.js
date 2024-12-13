@@ -1,3 +1,7 @@
+// src/routes/budgets.js
+// Contributors: Harshit Jain, Ashish Dev Choudhary, Shivansh Singh, Advik Bargoti
+// Sets up Budget Functionality
+
 const express = require('express');
 const router = express.Router();
 const Budget = require('../models/Budget');
