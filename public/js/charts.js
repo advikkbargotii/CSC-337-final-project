@@ -1,3 +1,6 @@
+// public/js/charts.js
+// Contributors: Harshit Jain, Ashish Dev Choudhary, Shivansh Singh, Advik Bargoti
+// Javascript file for Charts Functionality
 document.addEventListener('DOMContentLoaded', () => {
     // Check if user is logged in
     const user = JSON.parse(localStorage.getItem('user'));
