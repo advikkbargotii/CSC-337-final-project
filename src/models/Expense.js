@@ -1,3 +1,6 @@
+// src/models/Expense.js
+// Contributors: Harshit Jain, Ashish Dev Choudhary, Shivansh Singh, Advik Bargoti
+// Model set up for Expense data with Mongoose
 const mongoose = require('mongoose');
 
 const expenseSchema = new mongoose.Schema({
