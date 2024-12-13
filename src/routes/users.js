@@ -1,3 +1,7 @@
+// src/routes/users.js
+// Contributors: Harshit Jain, Ashish Dev Choudhary, Shivansh Singh, Advik Bargoti
+// Sets up users Functionality
+
 const express = require('express');
 const router = express.Router();
 const User = require('../models/User');
