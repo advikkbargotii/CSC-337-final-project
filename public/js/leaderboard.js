@@ -1,3 +1,7 @@
+// public/js/leaderboard.js
+// Contributors: Harshit Jain, Ashish Dev Choudhary, Shivansh Singh, Advik Bargoti
+// Javascript file for Leaderboard Functionality
+
 // Track current user and leaderboard data
 let currentUser = null;
 let leaderboardData = null;
