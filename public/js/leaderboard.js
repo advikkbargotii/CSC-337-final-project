@@ -48,42 +48,7 @@ function setupEventListeners() {
     timeFilter.addEventListener('change', loadLeaderboard);
 }
 
-// Add at the start of your loadLeaderboard function
-// async function loadLeaderboard() {
-//     console.log('🌟 Frontend: Starting to load leaderboard data');
-//     try {
-//         // Get current user from localStorage
-//         const user = JSON.parse(localStorage.getItem('user'));
-//         console.log('👤 Frontend: Current user:', user);
 
-//         const timeRange = document.getElementById('timeRange').value;
-//         console.log('⏰ Frontend: Selected time range:', timeRange);
-
-//         console.log('🔄 Frontend: Making API request to /api/leaderboard');
-//         const response = await fetch('/api/leaderboard');
-        
-//         console.log('📥 Frontend: Raw API response:', response);
-//         if (!response.ok) {
-//             throw new Error(`HTTP error! status: ${response.status}`);
-//         }
-        
-//         const data = await response.json();
-//         console.log('📊 Frontend: Received data:', data);
-
-//         if (data.success) {
-//             console.log('✅ Frontend: Successfully received leaderboard data');
-//             displayLeaderboard(data.leaderboard);
-//             updateUserStats(data.userStats);
-//         } else {
-//             console.log('❌ Frontend: API returned success: false');
-//             throw new Error(data.message || 'Failed to load leaderboard data');
-//         }
-//     } catch (error) {
-//         console.error('❌ Frontend Error:', error);
-//         document.querySelector('.leaderboard-error').textContent = 
-//             'Failed to load leaderboard data. Please try again later.';
-//     }
-// }
 async function loadLeaderboard() {
     try {
         // Get current user from localStorage
