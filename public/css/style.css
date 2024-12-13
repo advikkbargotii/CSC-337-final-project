@@ -388,7 +388,7 @@ input:focus {
     padding: 0.25rem;
 }
 
-/* Ensure filters don't take too much space */
+
 .filters {
     padding: 0.75rem;
     margin-bottom: 1rem;
@@ -744,7 +744,7 @@ input:focus {
 .user-stats {
     text-align: right;
 }
-/* Add these to your existing style.css file */
+
 
 .leaderboard-error {
     background-color: #fee2e2;
@@ -808,7 +808,7 @@ input:focus {
 .leaderboard-item, .top-user {
     transition: all 0.3s ease;
 }
-/* Add these styles to your existing style.css file */
+
 
 /* Charts Page Specific Styles */
 .filters {
