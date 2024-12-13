@@ -1,3 +1,6 @@
+// src/models/Budget.js
+// Contributors: Harshit Jain, Ashish Dev Choudhary, Shivansh Singh, Advik Bargoti
+// Model set up for Budget data with Mongoose
 const mongoose = require('mongoose');
 
 const budgetSchema = new mongoose.Schema({
