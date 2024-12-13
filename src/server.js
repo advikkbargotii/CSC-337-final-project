@@ -1,3 +1,7 @@
+// src/server.js
+// Contributors: Harshit Jain, Ashish Dev Choudhary, Shivansh Singh, Advik Bargoti
+// Sets up Budget Functionality
+
 const express = require('express');
 const mongoose = require('mongoose');
 const cors = require('cors');
