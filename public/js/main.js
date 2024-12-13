@@ -1,4 +1,7 @@
 // public/js/main.js
+// Contributors: Harshit Jain, Ashish Dev Choudhary, Shivansh Singh, Advik Bargoti
+// Javascript file for Login functionality
+
 document.addEventListener('DOMContentLoaded', () => {
     const loginForm = document.getElementById('loginForm');
     
